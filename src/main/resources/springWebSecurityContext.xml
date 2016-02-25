@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+  <security:authentication-manager erase-credentials="true"/>
+
+  <security:global-method-security jsr250-annotations="enabled"
+                                   pre-post-annotations="enabled"
+                                   secured-annotations="enabled"/>
+
+  <security:http>
+    <security:access-denied-handler error-page="/"/>
+
+    <security:csrf disabled="true"/>
+
+    <security:form-login always-use-default-target="true"
+                         authentication-failure-url="/login"
+                         login-page="/login"
+                         login-processing-url="/login/submit"/>
+
+    <security:headers>
+      <security:cache-control/>
+      <security:content-type-options/>
+      <security:frame-options policy="SAMEORIGIN"/>
+      <security:xss-protection/>
+    </security:headers>
+
+    <security:intercept-url access="permitAll" pattern="/css/**"/>
+    <security:intercept-url access="permitAll" pattern="/font/**"/>
+    <security:intercept-url access="permitAll" pattern="/script/**"/>
+
+    <security:intercept-url access="permitAll" pattern="/login/**"/>
+
+    <security:intercept-url access="isAuthenticated()" pattern="/**"/>
+
+    <security:logout invalidate-session="true" logout-success-url="/logout/continue"/>
+
+    <security:session-management session-fixation-protection="newSession"/>
+  </security:http>
+</beans>

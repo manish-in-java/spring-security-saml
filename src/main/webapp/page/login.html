@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:inline="text">
+  <head>
+    <title>Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome.css}"/>
+
+    <script type="text/javascript" th:src="@{/script/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/script/bootstrap.js}"></script>
+  </head>
+  <body role="document">
+    <div class="container">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            Panel
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+
+    <div class="navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <p/>
+        <p class="small text-muted">Copyright 2013-[[${#dates.format(#dates.createToday(), "yyyy")}]] SpringSource, Inc. All rights reserved</p>
+      </div>
+    </div>
+  </body>
+</html>
