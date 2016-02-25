@@ -1,11 +1,27 @@
 # Overview
 This sample application demonstrates the use of Spring Security for
-authenticating users of a web application based on Spring MVC using
-Spring Security extensions for SAML in addition to regular authentication
-methods such as form based login.
+authenticating users of a web application based on Spring MVC and
+using Spring Security extensions for SAML in addition to regular
+authentication methods such as form based login.
 
-Download it and run it as `mvn clean tomcat7:run`.  Then access it using a web
-browser at [http://localhost](http://localhost).
+Download it and run it as `mvn clean tomcat7:run`.  Then access it using
+a web browser at [http://localhost](http://localhost).  This will present
+a sign-in form.
+
+When the application is launched for the first time, it will not recognize
+any users because none have been registered yet.  Use the sign-up link at
+the bottom of the form to open the registration form.  Register a user with
+a valid email address, name and password.  This process needs to be repeated
+every time the application is stopped and started again because the user
+information is kept strictly in-memory and is not saved anywhere in between
+application restarts.
+
+Once registered, you can sign in with the registered email address and
+password.  You can register as many users as you want while the application is
+running, provided the users have unique email addresses.
+
+Successful sign-in will display the home page which will list all the
+users registered with the application.
 
 # License
 This sample application and its associated source code in its entirety is being made

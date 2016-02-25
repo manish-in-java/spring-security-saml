@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Business logic operations for {@link Person}.
  */
@@ -57,6 +59,16 @@ public class PersonService
     }
 
     return person;
+  }
+
+  /**
+   * Gets all persons registered with the application.
+   *
+   * @return A {@link List} of {@link Person}s.
+   */
+  public List<Person> list()
+  {
+    return (List) repository.findAll(PersonRepository.DEFAULT_SORT);
   }
 
   /**

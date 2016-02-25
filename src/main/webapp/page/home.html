@@ -45,7 +45,26 @@
 <div class="container">
   <div class="jumbotron">
     <h1 th:text="#{generic.welcome}">Welcome</h1>
-    <p>You have successfully authenticated with Spring Security!</p>
+    <p>You have successfully authenticated with Spring Security! All users registered with this application are listed below.</p>
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading" th:text="#{generic.users}">Users</div>
+    <table class="table table-bordered table-condensed table-hover table-striped">
+      <thead>
+      <tr>
+        <th th:text="#{registration.email}">Email</th>
+        <th th:text="#{registration.name}">First name</th>
+        <th th:text="#{registration.surname}">Last name</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr th:each="person: ${persons}">
+          <td th:text="${person.emailAddress}">Email</td>
+          <td th:text="${person.firstName}">First name</td>
+          <td th:text="${person.lastName}">Last name</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

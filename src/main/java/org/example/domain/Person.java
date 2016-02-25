@@ -30,7 +30,6 @@ public class Person extends Model
   private String lastName;
 
   @Column(name = "password")
-  @NotNull
   @Size(max = 1000)
   private String password;
 

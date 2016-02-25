@@ -6,5 +6,6 @@
 build/
 target/
 *~
+*.db
 *.iml
 *.tmp
