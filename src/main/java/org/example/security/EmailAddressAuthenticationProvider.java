@@ -1,5 +1,6 @@
 package org.example.security;
 
+import org.example.domain.Person;
 import org.example.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,17 +30,29 @@ public class EmailAddressAuthenticationProvider implements AuthenticationProvide
   @Override
   public Authentication authenticate(final Authentication authentication) throws AuthenticationException
   {
-    if (personService.authenticate(authentication.getName(), (String) authentication.getCredentials()))
+    try
     {
-      // Save the authentication token.
-      SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(authentication.getPrincipal()
+      // Attempt to authenticate the person.
+      final Person person = personService.authenticate(authentication.getName(), (String) authentication.getCredentials());
+
+      // Generate an authentication token using the authenticated information.
+      final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal()
           , authentication.getCredentials()
-          , Collections.singletonList(new SimpleGrantedAuthority(ROLE))));
+          , Collections.singletonList(new SimpleGrantedAuthority(ROLE)));
 
-      return authentication;
+      // Save the person's full name so that it can be used in the presentation
+      // layer later on.
+      token.setDetails(person.getName());
+
+      // Save the authentication token.
+      SecurityContextHolder.getContext().setAuthentication(token);
+
+      return token;
     }
-
-    throw new AuthenticationServiceException(String.format("The email address [%s] could not be authenticated.", authentication.getName()));
+    catch (final Throwable t)
+    {
+      throw new AuthenticationServiceException(String.format("The email address [%s] could not be authenticated.", authentication.getName()), t);
+    }
   }
 
   /**

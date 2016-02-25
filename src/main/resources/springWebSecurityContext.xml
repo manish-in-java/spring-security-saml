@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
   <bean class="org.example.security.EmailAddressAuthenticationProvider" id="authenticationProvider"/>
 
-  <security:authentication-manager erase-credentials="false">
+  <security:authentication-manager erase-credentials="true">
     <security:authentication-provider ref="authenticationProvider"/>
   </security:authentication-manager>
 

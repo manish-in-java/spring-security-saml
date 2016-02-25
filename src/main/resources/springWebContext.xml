@@ -25,6 +25,7 @@
         <property name="dialects">
           <set>
             <bean class="org.thymeleaf.spring4.dialect.SpringStandardDialect"/>
+            <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
           </set>
         </property>
         <property name="templateResolvers">

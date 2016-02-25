@@ -66,6 +66,17 @@ public class Person extends Model
   }
 
   /**
+   * Gets the full name for the person as a combination of their first and
+   * last names.
+   *
+   * @return The person's full name.
+   */
+  public String getName()
+  {
+    return String.format("%s %s", firstName, lastName);
+  }
+
+  /**
    * Gets the authentication password for the person.
    *
    * @return The authentication password for the person.

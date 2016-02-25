@@ -144,6 +144,13 @@
       <version>${thymeleaf.version}</version>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+      <version>${thymeleaf.security.version}</version>
+      <scope>runtime</scope>
+    </dependency>
   </dependencies>
 
   <properties>
@@ -160,5 +167,6 @@
     <spring.data.jpa.version>1.9.4.RELEASE</spring.data.jpa.version>
     <spring.security.version>4.0.3.RELEASE</spring.security.version>
     <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
+    <thymeleaf.security.version>2.1.2.RELEASE</thymeleaf.security.version>
   </properties>
 </project>

@@ -26,18 +26,18 @@ public class PersonService
    * @return {@code true} if a person with the specified email address exists
    * and has the specified password.
    */
-  public boolean authenticate(final String emailAddress, final String password)
+  public Person authenticate(final String emailAddress, final String password)
   {
     if (emailAddress == null)
     {
       // A person cannot be authenticated without the email address.
-      return false;
+      throw new IllegalArgumentException(Errors.Authentication.BLANK_EMAIL);
     }
 
     if (password == null)
     {
       // A person cannot be authenticated without the password.
-      return false;
+      throw new IllegalArgumentException(Errors.Authentication.BLANK_PASSWORD);
     }
 
     // Attempt to locate the person with the specified email address, making
@@ -47,11 +47,16 @@ public class PersonService
     if (person == null)
     {
       // No person with the specified email address was found.
-      return false;
+      throw new IllegalArgumentException(Errors.Authentication.UNKNOWN_EMAIL);
     }
 
-    // Compare the supplied password with the stored value.
-    return person.getPassword().equals(password.trim());
+    if (!person.getPassword().equals(password.trim()))
+    {
+      // The password did not match.
+      throw new IllegalArgumentException(Errors.Authentication.PASSWORD_MISMATCH);
+    }
+
+    return person;
   }
 
   /**
@@ -66,7 +71,7 @@ public class PersonService
     // already.
     if (repository.findByEmailAddress(person.getEmailAddress()) != null)
     {
-      throw new IllegalArgumentException(RegistrationErrors.DUPLICATE_EMAIL);
+      throw new IllegalArgumentException(Errors.Registration.DUPLICATE_EMAIL);
     }
 
     // Save the person.
@@ -74,10 +79,27 @@ public class PersonService
   }
 
   /**
-   * Defines errors that may be encountered when registering a user.
+   * Defines errors that may be encountered during processing.
    */
-  private static final class RegistrationErrors
+  private static final class Errors
   {
-    static final String DUPLICATE_EMAIL = "registration.email.duplicate";
+    /**
+     * Defines errors that may be encountered when authenticating a user.
+     */
+    private static final class Authentication
+    {
+      static final String BLANK_EMAIL       = "authentication.email.blank";
+      static final String BLANK_PASSWORD    = "authentication.password.blank";
+      static final String PASSWORD_MISMATCH = "authentication.password.mismatch";
+      static final String UNKNOWN_EMAIL     = "authentication.email.unknown";
+    }
+
+    /**
+     * Defines errors that may be encountered when registering a user.
+     */
+    private static final class Registration
+    {
+      static final String DUPLICATE_EMAIL = "registration.email.duplicate";
+    }
   }
 }
