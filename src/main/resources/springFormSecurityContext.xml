@@ -15,6 +15,10 @@
                                    pre-post-annotations="enabled"
                                    secured-annotations="enabled"/>
 
+  <security:http pattern="/css/**" security="none"/>
+  <security:http pattern="/font/**" security="none"/>
+  <security:http pattern="/script/**" security="none"/>
+
   <security:http>
     <security:access-denied-handler error-page="/"/>
 
@@ -31,10 +35,6 @@
       <security:frame-options policy="SAMEORIGIN"/>
       <security:xss-protection/>
     </security:headers>
-
-    <security:intercept-url access="permitAll" pattern="/css/**"/>
-    <security:intercept-url access="permitAll" pattern="/font/**"/>
-    <security:intercept-url access="permitAll" pattern="/script/**"/>
 
     <security:intercept-url access="isAnonymous()" pattern="/login/**"/>
     <security:intercept-url access="isAnonymous()" pattern="/register/**"/>
