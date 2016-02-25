@@ -3,26 +3,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:transaction="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource">
-      <bean class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-        <property name="autoCommit" value="true"/>
-        <property name="connectionTimeout" value="3000"/>
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="jdbcUrl" value="jdbc:h2:mem:spring-saml"/>
-        <property name="maximumPoolSize" value="5"/>
-        <property name="minimumIdle" value="1"/>
-        <property name="password" value=""/>
-        <property name="transactionIsolation" value="TRANSACTION_READ_COMMITTED"/>
-        <property name="username" value="sa"/>
-        <property name="validationTimeout" value="2000"/>
-      </bean>
+      <jdbc:embedded-database id="dataSource" type="H2"/>
     </property>
     <property name="jpaProperties">
       <props>
