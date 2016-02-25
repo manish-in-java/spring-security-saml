@@ -53,4 +53,31 @@ public class PersonService
     // Compare the supplied password with the stored value.
     return person.getPassword().equals(password.trim());
   }
+
+  /**
+   * Registers a person with specified information.
+   *
+   * @param person The person to register.
+   */
+  @Transactional
+  public void register(final Person person)
+  {
+    // Ensure that a person with the provided email address does not exist
+    // already.
+    if (repository.findByEmailAddress(person.getEmailAddress()) != null)
+    {
+      throw new IllegalArgumentException(RegistrationErrors.DUPLICATE_EMAIL);
+    }
+
+    // Save the person.
+    repository.save(person);
+  }
+
+  /**
+   * Defines errors that may be encountered when registering a user.
+   */
+  private static final class RegistrationErrors
+  {
+    static final String DUPLICATE_EMAIL = "registration.email.duplicate";
+  }
 }

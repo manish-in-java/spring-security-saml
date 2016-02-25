@@ -7,7 +7,10 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Collections;
 
 /**
  * An implementation of Spring Security {@link AuthenticationProvider} that
@@ -15,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class EmailAddressAuthenticationProvider implements AuthenticationProvider
 {
+  private static final String ROLE = "User";
+
   @Autowired
   private PersonService personService;
 
@@ -26,12 +31,10 @@ public class EmailAddressAuthenticationProvider implements AuthenticationProvide
   {
     if (personService.authenticate(authentication.getName(), (String) authentication.getCredentials()))
     {
-      // If the user authenticated successfully, set the authentication token
-      // as authenticated.
-      authentication.setAuthenticated(true);
-
       // Save the authentication token.
-      SecurityContextHolder.getContext().setAuthentication(authentication);
+      SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(authentication.getPrincipal()
+          , authentication.getCredentials()
+          , Collections.singletonList(new SimpleGrantedAuthority(ROLE))));
 
       return authentication;
     }

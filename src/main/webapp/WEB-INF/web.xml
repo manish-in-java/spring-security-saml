@@ -7,6 +7,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
       classpath*:springDataContext.xml
+      classpath*:springServiceContext.xml
       classpath*:springWebSecurityContext.xml
     </param-value>
   </context-param>

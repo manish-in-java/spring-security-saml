@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org"
       th:inline="text">
 <head>
-  <title th:text="#{security.login}">Sign-in</title>
+  <title th:text="#{security.register}">Sign-up</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -26,14 +26,27 @@
 <div class="container">
   <div class="col-md-4"></div>
   <div class="col-md-4">
-    <div class="panel panel-primary">
-      <div class="panel-heading" th:text="#{security.login}">Sign-in</div>
+    <div class="panel panel-success">
+      <div class="panel-heading" th:text="#{security.register}">Sign-up</div>
       <div class="panel-body">
-        <form method="POST" role="form" th:action="@{/login/submit}" data-toggle="validator">
+        <form method="POST" role="form" th:action="@{/register}" data-toggle="validator">
+          <div class="alert alert-danger" th:if="${error != null}" th:text="#{${error}}"></div>
           <div class="form-group has-feedback">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-              <input class="form-control" name="username" type="email" autofocus="autofocus" required="required" th:placeholder="#{registration.email}"/>
+              <input class="form-control" name="emailAddress" type="email" autofocus="autofocus" required="required" th:placeholder="#{registration.email}"/>
+            </div>
+          </div>
+          <div class="form-group has-feedback">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input class="form-control" name="firstName" type="text" required="required" th:placeholder="#{registration.name}"/>
+            </div>
+          </div>
+          <div class="form-group has-feedback">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input class="form-control" name="lastName" type="text" required="required" th:placeholder="#{registration.surname}"/>
             </div>
           </div>
           <div class="form-group has-feedback">
@@ -43,13 +56,13 @@
             </div>
           </div>
           <div class="form-group text-right">
-            <button class="btn btn-primary" th:text="#{generic.submit}">Submit</button>
+            <button class="btn btn-success" th:text="#{generic.submit}">Submit</button>
           </div>
         </form>
       </div>
       <div class="panel-footer text-right">
-        <i class="fa fa-user"></i>
-        <a th:href="@{/register}"><small th:text="#{security.register}">Sign-up</small></a>
+        <i class="fa fa-lock"></i>
+        <a th:href="@{/login}"><small th:text="#{security.login}">Sign-in</small></a>
       </div>
     </div>
   </div>

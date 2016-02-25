@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Optional;
 
 /**
  * Represents a person.
@@ -81,7 +82,7 @@ public class Person extends Model
    */
   public void setEmailAddress(final String emailAddress)
   {
-    this.emailAddress = emailAddress;
+    this.emailAddress = Optional.ofNullable(emailAddress).map(e -> e.trim().toLowerCase()).orElse(null);
   }
 
   /**

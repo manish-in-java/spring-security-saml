@@ -4,8 +4,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
-  <security:authentication-manager erase-credentials="true"/>
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+  <bean class="org.example.security.EmailAddressAuthenticationProvider" id="authenticationProvider"/>
+
+  <security:authentication-manager erase-credentials="false">
+    <security:authentication-provider ref="authenticationProvider"/>
+  </security:authentication-manager>
 
   <security:global-method-security jsr250-annotations="enabled"
                                    pre-post-annotations="enabled"
@@ -32,7 +36,8 @@
     <security:intercept-url access="permitAll" pattern="/font/**"/>
     <security:intercept-url access="permitAll" pattern="/script/**"/>
 
-    <security:intercept-url access="permitAll" pattern="/login/**"/>
+    <security:intercept-url access="isAnonymous()" pattern="/login/**"/>
+    <security:intercept-url access="isAnonymous()" pattern="/register/**"/>
 
     <security:intercept-url access="isAuthenticated()" pattern="/**"/>
 
