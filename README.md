@@ -1,7 +1,8 @@
 # Overview
-This sample application demonstrates the use of Spring Security for protecting a web
-application against CSRF attacks without using the authentication and authorization
-features provided by Spring Security.
+This sample application demonstrates the use of Spring Security for
+authenticating users of a web application based on Spring MVC using
+Spring Security extensions for SAML in addition to regular authentication
+methods such as form based login.
 
 Download it and run it as `mvn clean tomcat7:run`.  Then access it using a web
 browser at [http://localhost](http://localhost).
@@ -10,7 +11,7 @@ browser at [http://localhost](http://localhost).
 This sample application and its associated source code in its entirety is being made
 available under the following licensing terms.
 
-    Copyright (C) 2014
+    Copyright (C) 2016
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of
     this software and associated documentation files (the "Software"), to deal in the
