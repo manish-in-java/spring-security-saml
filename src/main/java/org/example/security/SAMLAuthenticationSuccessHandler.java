@@ -19,11 +19,11 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * Automatically registers a successfully authenticated user.
+ * Automatically registers a user successfully authenticated with SAML SSO.
  */
-public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
+public class SAMLAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
 {
-  private static Logger LOGGER = LoggerFactory.getLogger(AutoRegisteringAuthenticationSuccessHandler.class);
+  private static Logger LOGGER = LoggerFactory.getLogger(SAMLAuthenticationSuccessHandler.class);
 
   private static final String ROLE = "User";
 
