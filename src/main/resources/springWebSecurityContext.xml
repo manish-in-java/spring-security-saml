@@ -139,7 +139,7 @@
   <bean id="samlSuccessLogoutHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler">
     <property name="defaultTargetUrl" value="/"/>
   </bean>
-  <bean id="samlSuccessRedirectHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+  <bean id="samlSuccessRedirectHandler" class="org.example.security.AutoRegisteringAuthenticationSuccessHandler">
     <property name="defaultTargetUrl" value="/"/>
   </bean>
   <bean id="samlVelocityEngine" class="org.springframework.security.saml.util.VelocityFactory" factory-method="getEngine"/>
