@@ -2,6 +2,8 @@ package org.example.security;
 
 import org.example.domain.Person;
 import org.example.service.PersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,8 @@ import java.util.Collections;
  */
 public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler
 {
+  private static Logger LOGGER = LoggerFactory.getLogger(AutoRegisteringAuthenticationSuccessHandler.class);
+
   private static final String ROLE = "User";
 
   @Autowired
@@ -36,6 +40,8 @@ public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwa
     final String principal = (String) authentication.getPrincipal();
     final SAMLCredential credential = (SAMLCredential) authentication.getCredentials();
 
+    LOGGER.debug(String.format("Attempting to auto-register principal [%s].", principal));
+
     // Prepare to attempt registering the user.
     final Person person = new Person(principal, getFirstName(credential), getLastName(credential));
 
@@ -43,9 +49,17 @@ public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwa
     {
       // Attempt to register the user.
       service.register(person);
+
+      LOGGER.debug(String.format("Principal [%s] auto-registered successfully.", principal));
+    }
+    catch (final Throwable t)
+    {
+      LOGGER.debug(String.format("Principal [%s] already exists.", principal));
     }
     finally
     {
+      LOGGER.debug(String.format("Setting profile information for principal [%s].", principal));
+
       // Generate an authentication token using the authenticated information.
       final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal()
           , authentication.getCredentials()
@@ -57,6 +71,8 @@ public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwa
 
       // Save the authentication token.
       SecurityContextHolder.getContext().setAuthentication(token);
+
+      LOGGER.debug(String.format("Profile information set for principal [%s].", principal));
     }
 
     super.onAuthenticationSuccess(request, response, authentication);
@@ -70,7 +86,7 @@ public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwa
    */
   private String getFirstName(final SAMLCredential credential)
   {
-    return getStringAttribute(credential, "firstName");
+    return getStringAttribute(credential, "FirstName");
   }
 
   /**
@@ -81,7 +97,7 @@ public class AutoRegisteringAuthenticationSuccessHandler extends SavedRequestAwa
    */
   private String getLastName(final SAMLCredential credential)
   {
-    return getStringAttribute(credential, "lastName");
+    return getStringAttribute(credential, "LastName");
   }
 
   /**

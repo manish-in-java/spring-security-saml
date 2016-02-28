@@ -2,6 +2,8 @@ package org.example.security;
 
 import org.example.domain.Person;
 import org.example.service.PersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -19,7 +21,8 @@ import java.util.Collections;
  */
 public class EmailAddressAuthenticationProvider implements AuthenticationProvider
 {
-  private static final String ROLE = "User";
+  private static       Logger LOGGER = LoggerFactory.getLogger(EmailAddressAuthenticationProvider.class);
+  private static final String ROLE   = "User";
 
   @Autowired
   private PersonService personService;
@@ -32,8 +35,14 @@ public class EmailAddressAuthenticationProvider implements AuthenticationProvide
   {
     try
     {
+      LOGGER.debug(String.format("Attempting to authenticate principal [%s].", authentication.getPrincipal()));
+
       // Attempt to authenticate the person.
       final Person person = personService.authenticate(authentication.getName(), (String) authentication.getCredentials());
+
+      LOGGER.debug(String.format("Principal [%s] authenticated successfully.", authentication.getPrincipal()));
+
+      LOGGER.debug(String.format("Setting profile information for principal [%s].", authentication.getPrincipal()));
 
       // Generate an authentication token using the authenticated information.
       final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal()
@@ -46,6 +55,8 @@ public class EmailAddressAuthenticationProvider implements AuthenticationProvide
 
       // Save the authentication token.
       SecurityContextHolder.getContext().setAuthentication(token);
+
+      LOGGER.debug(String.format("Profile information set for principal [%s].", authentication.getPrincipal()));
 
       return token;
     }
