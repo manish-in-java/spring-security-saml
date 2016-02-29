@@ -58,7 +58,7 @@ former case, it is known as IDP-initiated authentication whereas in the later
 it is known as SP-initiated authentication.
 
 In the case of IDP-initiated authentication, the user is already authenticated
-with the IDP and requests a resource from the SP.  The IP forwards
+with the IDP and requests a resource from the SP.  The IDP forwards
 authentication information to the SP, ensuring that the SP is able to
 authenticate the user transparently.
 
@@ -70,9 +70,10 @@ the user transparently.  If the user is not authenticated with the IDP, the
 IDP forces them to authenticate and then proceeds with the re-redirect process.
 
 # Form authentication
-Download it and run it as `mvn clean tomcat7:run`.  Then access it using
-a web browser at [http://localhost](http://localhost).  This will present
-a sign-in form.
+Download this application or check it from Git and run the embedded Tomcat servlet
+container as `mvn clean tomcat7:run`.  Then access the application using a
+web browser at [http://localhost](http://localhost).  This will present a
+sign-in form.
 
 When the application is launched for the first time, it will not recognize
 any users because none have been registered yet.  Use the sign-up link at
@@ -101,10 +102,11 @@ This will either display the metadata as XML in the web browser or download an
 XML file locally.  If later, open the file in a text editor.
 1. Follow the detailed instructions on the
 [SSOCircle website](http://www.ssocircle.com/en/ssocircle-how-to/) to 
-register the sample application as an SP.
+register the sample application as an SP.  Keep the following in mind registering
+the SP:
     1. Provide `localhost` as the provider name (FQDN field).
-    1. Choose to receive all the three fields in the authentication response when registering the SP.
-    1. Paste the metadata downloaded from the application in the field marked for metadata.
+    1. The SP registration page displays three fields (`FirstName`, `LastName` and `EmailAddress`) that SSOCircle can pass back to the SP on successful authentication.  Choose to receive all the three fields in the authentication response.
+    1. Paste the metadata downloaded from the sample application in the field marked for metadata.
     1. Save the provider definition.
 1. Initiate an [IDP-initiated SSO request](https://idp.ssocircle.com/sso/hos/AdPage.jsp?returnUrl=/sso/idpssoinit&metaAlias=%2Fssocircle&spEntityID=http%3A%2F%2Flocalhost%3A80%2Fsaml%2Fmetadata).
 1. Authenticate with SSOCircle using your registered credentials.
